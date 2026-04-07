@@ -1,0 +1,207 @@
+/* ================= GLOBAL ================= */
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+/* ================= NAVBAR ================= */
+.admin-nav {
+    display: flex;
+    position: sticky;
+    top: 0;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 30px;
+    height: 60px;
+
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(14px);
+
+    border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+
+    color: white;
+    z-index: 1000;
+
+    /* NEW */
+    transition: all 0.3s ease;
+}
+
+/* subtle scroll effect */
+.admin-nav:hover {
+    border-bottom: 1px solid rgba(56, 189, 248, 0.6);
+}
+
+/* ================= LOGO ================= */
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    gap: 10px;
+    font-weight: bold;
+
+    /* NEW */
+    transition: 0.3s;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 8px #38bdf8;
+}
+
+/* ================= LINKS ================= */
+.nav-links {
+    display: flex;
+    gap: 25px;
+
+    /* NEW */
+    transition: all 0.3s ease;
+}
+
+.nav-links a {
+    text-decoration: none;
+    font-size: 16px;
+    color: #cbd5f5;
+    position: relative;
+    padding: 6px 12px;
+    transition: all 0.3s ease;
+}
+
+/* hover animation */
+.nav-links a:hover {
+    color: #38bdf8;
+    text-shadow: 0 0 10px #38bdf8;
+    transform: translateY(-2px);
+}
+
+/* underline glow */
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background: #38bdf8;
+    left: 0;
+    bottom: -4px;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px #38bdf8;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* ================= ACTIVE LINK ================= */
+.bgc {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8 !important;
+    border-radius: 6px;
+    padding: 6px 12px;
+
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+
+    /* NEW */
+    transition: all 0.3s ease;
+}
+
+.bgc:hover {
+    transform: scale(1.05);
+}
+
+/* ================= LOGOUT ================= */
+.nav-links button {
+    background: transparent;
+    border: 1px solid #ef4444;
+    padding: 6px 14px;
+    color: #ef4444;
+    border-radius: 6px;
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+.nav-links button:hover {
+    background: #ef4444;
+    color: white;
+    box-shadow: 0 0 12px #ef4444;
+    transform: translateY(-2px);
+}
+
+/* ================= HAMBURGER ================= */
+.hamburger {
+    display: none;
+    font-size: 26px;
+    cursor: pointer;
+    color: white;
+
+    /* NEW */
+    transition: 0.3s;
+}
+
+.hamburger:hover {
+    transform: rotate(90deg) scale(1.1);
+    color: #38bdf8;
+}
+
+/* ================= MOBILE VIEW ================= */
+@media (max-width: 768px) {
+
+    .admin-nav {
+        position: relative;
+        padding: 10px 20px;
+    }
+
+    .hamburger {
+        display: block;
+        z-index: 1001;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(16px);
+
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+        padding: 20px 0;
+
+        display: none;
+        z-index: 1000;
+
+        /* NEW animation */
+        transform: translateY(-20px);
+        opacity: 0;
+        transition: all 0.4s ease;
+    }
+
+    .nav-links.open {
+        display: flex;
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    /* stagger animation */
+    .nav-links a {
+        opacity: 0;
+        transform: translateY(10px);
+        animation: fadeInUp 0.4s forwards;
+    }
+
+    .nav-links.open a:nth-child(1) { animation-delay: 0.1s; }
+    .nav-links.open a:nth-child(2) { animation-delay: 0.2s; }
+    .nav-links.open a:nth-child(3) { animation-delay: 0.3s; }
+    .nav-links.open a:nth-child(4) { animation-delay: 0.4s; }
+}
+
+/* ================= KEYFRAMES ================= */
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

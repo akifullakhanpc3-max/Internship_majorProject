@@ -1,0 +1,185 @@
+.payment-wrapper {
+  padding: 20px;
+  color: white;
+  animation: fadeIn 0.5s ease;
+}
+
+/* Sections */
+.payment-pending,
+.payment-success {
+  margin-bottom: 40px;
+}
+
+/* Container */
+.payment-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Card */
+.payment-card {
+  width: 250px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+
+  /* ✨ Animation */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: slideUp 0.4s ease;
+}
+
+.payment-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+
+.payment-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.payment-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Content */
+.payment-card-content {
+  padding: 10px;
+}
+
+.payment-card-content p {
+  margin: 5px 0;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+/* Status */
+.payment-status.pending {
+  color: orange;
+}
+
+.payment-status.success {
+  color: lightgreen;
+}
+
+/* Buttons */
+.payment-confirm-btn,
+.payment-revert-btn,
+.payment-cancel-btn {
+  padding: 8px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 8px;
+
+  /* ✨ Smooth interaction */
+  transition: all 0.3s ease;
+}
+
+.payment-confirm-btn {
+  background: #4CAF50;
+  color: white;
+}
+
+.payment-confirm-btn:hover {
+  background: #45a049;
+  transform: scale(1.05);
+}
+
+.payment-revert-btn {
+  background: #f44336;
+  color: white;
+}
+
+.payment-revert-btn:hover {
+  background: #d32f2f;
+  transform: scale(1.05);
+}
+
+.payment-cancel-btn {
+  background: gray;
+  color: white;
+}
+
+.payment-cancel-btn:hover {
+  background: #555;
+}
+
+/* Badge */
+.payment-paid-badge {
+  margin-top: 5px;
+  color: lightgreen;
+  font-weight: bold;
+  animation: fadeIn 0.4s ease;
+}
+
+/* Modal */
+.payment-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  animation: fadeIn 0.3s ease;
+}
+
+.payment-modal-box {
+  background: #222;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+
+  /* ✨ Popup animation */
+  animation: popUp 0.3s ease;
+}
+
+.payment-modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+/* ================= ANIMATIONS ================= */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes popUp {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

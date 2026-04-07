@@ -1,0 +1,349 @@
+/* ================= GLOBAL ================= */
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    position: relative;
+}
+
+/* ================= ROOT ================= */
+#root {
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ================= MAIN WRAPPER ================= */
+.all {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    margin-top: 0px;
+    position: relative;
+}
+
+/* ================= PACKAGE CARD ================= */
+.indivisual-package {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 20px;
+    margin: 20px;
+    width: 95%;
+    max-width: 900px;
+
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+
+    transition: transform 0.3s ease;
+}
+
+.indivisual-package:hover {
+    transform: translateY(-5px);
+}
+
+/* ================= CONTAINER ================= */
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+}
+
+/* ================= IMAGE ================= */
+.package-image img {
+    width: 100%;
+    max-width: 280px;
+    border-radius: 10px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.package-image:hover img {
+    transform: scale(1.05);
+}
+
+/* ================= DETAILS ================= */
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.details h2 {
+    margin: 0;
+    color: #e2e8f0;
+    font-size: 24px;
+}
+
+.details h3 {
+    color: #cbd5f5;
+    margin: 0;
+}
+
+.details p {
+    margin: 0;
+    color: #94a3b8;
+    line-height: 1.5;
+}
+
+/* ================= BUTTONS ================= */
+.update {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.update button {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.update button:first-child {
+    background: #10b981;
+}
+
+.update button:last-child {
+    background: #ef4444;
+}
+
+.update button:hover {
+    transform: translateY(-2px);
+}
+
+/* ================= ABSOLUTE MODAL ================= */
+.confirm-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    min-height: 100vh;
+
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(6px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+    overflow-y: auto;
+
+    z-index: 9999;
+}
+
+/* ================= UPDATE FORM ================= */
+.update-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    width: 100%;
+    max-width: 480px;
+
+    padding: 28px;
+    border-radius: 16px;
+
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(16px);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+    position: relative;
+    animation: popup 0.3s ease;
+}
+
+/* ================= TITLE ================= */
+.update-form h2 {
+    margin: 0;
+    text-align: center;
+    color: #f1f5f9;
+    font-size: 22px;
+}
+
+/* ================= LABEL ================= */
+.update-form label {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: -6px;
+}
+
+/* ================= INPUTS ================= */
+.update-form input,
+.update-form textarea {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    background: rgba(15, 23, 42, 0.9);
+    color: #e2e8f0;
+
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+.update-form input:focus,
+.update-form textarea:focus {
+    border-color: #3b82f6;
+    background: rgba(15, 23, 42, 1);
+}
+
+/* ================= BUTTON ================= */
+.update-form button {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.update-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+}
+
+/* ================= CLOSE ================= */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+
+    font-size: 18px;
+    color: #cbd5f5;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.close:hover {
+    color: #ef4444;
+    transform: rotate(90deg);
+}
+
+/* ================= DELETE BOX ================= */
+.confirm-box {
+    width: 100%;
+    max-width: 360px;
+
+    padding: 25px;
+    border-radius: 14px;
+
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(16px);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+    text-align: center;
+    color: #e2e8f0;
+
+    animation: popup 0.3s ease;
+}
+
+.confirm-box button {
+    padding: 10px 16px;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.confirm-box button:first-child {
+    background: #ef4444;
+    color: white;
+}
+
+.confirm-box button:first-child:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+}
+
+.confirm-box button:last-child {
+    background: #334155;
+    color: #e2e8f0;
+}
+
+.confirm-box button:last-child:hover {
+    background: #475569;
+}
+
+/* ================= ANIMATION ================= */
+@keyframes popup {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .package-image img {
+        max-width: 100%;
+    }
+
+    .update-form {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .update-form {
+        max-width: 95%;
+        padding: 20px;
+    }
+
+    .details h2 {
+        font-size: 20px;
+    }
+
+    .details p {
+        font-size: 14px;
+    }
+}
