@@ -503,7 +503,7 @@ app.get('/get-userorders/:id', async (req, res) => {
     if (id) {
         try {
             const request = await orders.find({ userId: id })
-            console.log(request)
+            console.log(request);
             if (request.length > 0) {
                 return res.status(200).json({
                     success: true,
@@ -527,6 +527,33 @@ app.get('/get-userorders/:id', async (req, res) => {
     }
 })
 
+app.delete("/delete-order/:id", async (req, res) => {
+    const id = req.params.id;
+    if (id) {
+        try {
+            const response = await orders.findOneAndDelete({userId:id});
+            if (response) {
+                res.status(200).json({
+                    success: true,
+                    message: "order deleted successfully"
+                })
+            } else {
+                res.json({
+                    success: false,
+                    message: "order not found"
+                })
+            }
+        } catch (error) {
+            console.log(error)
+            res.json({
+                success: false,
+                message: "internal server error"
+            })
+        }
+    }else{
+        console.log("id not found")
+    }
+})
 
 
 app.listen(port, () => {

@@ -15,6 +15,7 @@ function App() {
           <Route path='orders' element={<Orders/>}></Route>
           <Route path='cart' element={<h1>this is cart component</h1>}></Route>
           <Route path='/packages' element={<Packages></Packages>}></Route>
+          <Route path='/packages/:id' element={<h1>this is inner component </h1>}></Route>
           <Route path='*' element={<h1> 404 not found</h1>}></Route>
         </Routes>
       </Router>
