@@ -1,31 +1,173 @@
-.navbar{
+/* =========================
+   NAVBAR
+========================= */
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 10vh;
-    background-color: rgba(97, 98, 98,0.1);
-    backdrop-filter: blur(10px);
-    padding: 4px;
+    padding: 14px 40px;
+
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(14px);
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom-left-radius:6px ;
+    border-bottom-right-radius:6px ;
+
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
-.navbar .logo{
-    font-size: 24px;
-    font-weight: bold;
+
+/* =========================
+   LOGO
+========================= */
+.logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.5px;
 }
-.nav-links{
+
+/* =========================
+   NAV LINKS
+========================= */
+.nav-links {
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    gap: 8px;
+    gap: 28px;
 }
-.nav-links a{
+
+/* Links */
+.nav-links a {
+    position: relative;
     text-decoration: none;
-    color: white;
-    font-size: 18px;
-    border-radius: 4px;
+    color: #cbd5e1;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 6px 4px;
+    transition: color 0.25s ease;
 }
-.nav-links a:hover{
-    background-color: rgb(14, 137, 190);
+
+/* 🔥 Underline animation */
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    background: #38bdf8;
+    transition: width 0.25s ease;
+}
+
+.nav-links a:hover {
+    color: #38bdf8;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Active link */
+.nav-links .active {
+    color: #38bdf8;
+}
+
+.nav-links .active::after {
+    width: 100%;
+}
+
+/* =========================
+   DASHBOARD BUTTON
+========================= */
+.dashboard-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+
+    background: linear-gradient(135deg, #38bdf8, #2563eb);
     color: white;
-    padding: 6px 12px;
-    transition: all 0.3s ease-in-out;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.dashboard-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+}
+
+/* =========================
+   DROPDOWN
+========================= */
+.dashboard-dropdown {
+    position: absolute;
+    right: 20px;
+    top: 65px;
+
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+
+    border-radius: 12px;
+    width: 220px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    overflow: hidden;
+
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+/* Dropdown items */
+.dashboard-dropdown button {
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.dashboard-dropdown button:hover {
+    background: #f1f5f9;
+    color: #2563eb;
+}
+
+/* =========================
+   ANIMATION
+========================= */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px 16px;
+    }
+
+    .logo {
+        font-size: 18px;
+    }
+
+    .nav-links {
+        gap: 14px;
+    }
+
+    .nav-links a {
+        font-size: 14px;
+    }
+
+    .dashboard-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
 }

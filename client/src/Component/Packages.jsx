@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Style/Packages.css'
+import Loading from './Loading';
 //instll madidini server side nin laptop alli maadu
 //access madooko varible allilink save madi haku 
 //eetr const url= 'https://localhot,...
@@ -29,7 +30,7 @@ function Packages() {
         fetchPackages();
     }, [url]);
 
-    if (loading) return <h2>Loading packages...</h2>;
+    if (loading) return <Loading/>;
 
     return (
         <div className='package'>

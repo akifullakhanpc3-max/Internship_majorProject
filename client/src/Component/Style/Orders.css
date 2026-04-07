@@ -1,105 +1,173 @@
-/* ===== LOADING STATE ===== */
+/* =========================
+   LOADING STATE
+========================= */
 .ifLoading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 70vh;
-  }
-  
-  /* ===== MAIN CONTAINER ===== */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+
+/* =========================
+ MAIN CONTAINER
+========================= */
+.orders-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+/* =========================
+ ORDER CARD
+========================= */
+.order {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  border-left: 6px solid #22c55e;
+
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+/* Hover */
+.order:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================
+ ORDER HEADER (Optional)
+========================= */
+.order::before {
+  content: "Order";
+  position: absolute;
+  top: -10px;
+  left: 15px;
+  background: #22c55e;
+  color: white;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+/* =========================
+ TEXT STYLING
+========================= */
+.order p {
+  margin: 10px 0;
+  font-size: 15px;
+  color: #475569;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Label */
+.order p strong {
+  font-weight: 500;
+  color: #64748b;
+}
+
+/* Value */
+.order p span {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* =========================
+ PRICE HIGHLIGHT
+========================= */
+.order .price {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+/* =========================
+ STATUS BADGE
+========================= */
+.status {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Example statuses */
+.status.success {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.status.pending {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+.status.cancelled {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* =========================
+ NO ORDERS
+========================= */
+.noOrders {
+  text-align: center;
+  margin-top: 80px;
+  font-size: 22px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* =========================
+ TABLET
+========================= */
+@media (max-width: 768px) {
   .orders-container {
-    width: 100%;
-    max-width: 1000px;
-    margin: 30px auto;
-    padding: 15px;
+      padding: 15px;
   }
-  
-  /* ===== ORDER CARD ===== */
+
   .order {
-    background: #ffffff;
-    border-radius: 14px;
-    padding: 18px 22px;
-    margin-bottom: 18px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    border-left: 5px solid #4CAF50;
-    transition: all 0.25s ease;
+      padding: 18px;
   }
-  
-  /* Hover effect (desktop only feel) */
-  .order:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
-  }
-  
-  /* ===== TEXT STYLING ===== */
+
   .order p {
-    margin: 8px 0;
-    font-size: 15px;
-    color: #444;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+      font-size: 14px;
   }
-  
-  /* Label (left side) */
-  .order p::before {
-    content: "";
-  }
-  
-  /* Value (right side highlight) */
-  .order p span {
-    font-weight: 600;
-    color: #000;
-  }
-  
-  /* ===== NO ORDERS ===== */
-  .noOrders {
-    text-align: center;
-    margin-top: 60px;
-    font-size: 24px;
-    color: #888;
-    font-weight: 500;
-  }
-  
-  /* ===== TABLET VIEW ===== */
-  @media (max-width: 768px) {
-    .orders-container {
+}
+
+/* =========================
+ MOBILE
+========================= */
+@media (max-width: 480px) {
+  .orders-container {
       padding: 10px;
-    }
-  
-    .order {
+  }
+
+  .order {
       padding: 16px;
       border-radius: 12px;
-    }
-  
-    .order p {
-      font-size: 14px;
-    }
   }
-  
-  /* ===== MOBILE VIEW ===== */
-  @media (max-width: 480px) {
-    .orders-container {
-      padding: 8px;
-    }
-  
-    .order {
-      padding: 14px;
-      border-radius: 10px;
-    }
-  
-    .order p {
+
+  .order p {
       font-size: 13px;
       flex-direction: column;
       align-items: flex-start;
-      gap: 4px;
-    }
-  
-    .order p span {
-      font-size: 14px;
-    }
-  
-    .noOrders {
-      font-size: 20px;
-    }
+      gap: 5px;
   }
+
+  .order p span {
+      font-size: 14px;
+  }
+
+  .noOrders {
+      font-size: 18px;
+  }
+}
