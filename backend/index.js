@@ -18,7 +18,6 @@ console.log(process.env.MONGO_URL)
 
 const AdminConnection = mongoose.createConnection(`${database}/admin`);
 const UserConnection = mongoose.createConnection(`${database}/user`);
-<<<<<<< HEAD
 const packageConnection = mongoose.createConnection(`${database}/package`)
 
 
@@ -28,20 +27,6 @@ if (AdminConnection) {
 if (UserConnection) {
     console.log("conntect to user");
 
-=======
-const packageConnection = mongoose.createConnection(`${database}/package`);
-const OrderCollection = mongoose.createConnection(`${database}/orders`);
-
-
-if (AdminConnection) {
-    console.log("connect to admin");
-}
-if (UserConnection) {
-    console.log("conntect to user");
-}
-if (OrderCollection) {
-    console.log("connect to order collection");
->>>>>>> 835eaed (removed zip permanently)
 }
 
 
@@ -53,40 +38,16 @@ const adminSchema = new mongoose.Schema({
 });
 
 const admin = AdminConnection.model('admin', adminSchema);
-<<<<<<< HEAD
 
 app.post('/admin', async (req, res) => {
     try {
         console.log(req.body.username);
         const { username, password } = req.body;
         console.log(username)
-=======
-app.post('/admin', async (req, res) => {
-    try {
-        // ✅ check if ANY admin exists
-        const count = await admin.countDocuments();
-
-        // 👉 if no data → create default admin
-        if (count === 0) {
-            await admin.create({
-                username: "admin",
-                password: "admin"
-            });
-
-            return res.json({
-                success: true,
-                message: "Default admin created. Use username: admin, password: admin"
-            });
-        }
-
-        // ✅ login logic
-        const { username, password } = req.body;
->>>>>>> 835eaed (removed zip permanently)
 
         const adminData = await admin.findOne({ username });
 
         if (!adminData) {
-<<<<<<< HEAD
             return res.status(401).json({ success: false });
         }
 
@@ -101,101 +62,6 @@ app.post('/admin', async (req, res) => {
         console.log(error)
     }
 });
-=======
-            return res.status(401).json({
-                success: false,
-                message: "Admin not found"
-            });
-        }
-
-        if (adminData.password === password) {
-            return res.json({
-                success: true,
-                message: "Login successful"
-            });
-        } else {
-            return res.status(401).json({
-                success: false,
-                message: "Wrong password"
-            });
-        }
-
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            success: false,
-            message: "Server error"
-        });
-    }
-});
-
-//getting dashboard data
-const dashboardSchema = mongoose.Schema({
-    orders: Number,
-    revenue: Number,
-    users: Number,
-    pending: Number
-})
-
-const dashboard = AdminConnection.model('dashboard', dashboardSchema);
-
-app.put('/amount', async (req, res) => {
-    try {
-
-        const response = await orders.find({ PaymentStatus: true })
-        const booking = await orders.countDocuments()
-        // console.log(booking);
-        let amount = 0;
-        const pending = await orders.countDocuments({ PaymentStatus: false })
-        // console.log(response.length);
-
-        if (response.length > 0) {
-            response.map((ele) => {
-                amount += (ele.NumberofPeople * ele.pricePerPerson)
-            })
-            const update = await dashboard.findOneAndUpdate({},
-                { revenue: amount, orders: booking, pending }
-            )
-            if (update) {
-                console.log("amount updated")
-                res.json({
-                    success: true
-                })
-            }
-        }
-        // console.log(amount);
-
-    } catch (error) {
-        console.log(error)
-    }
-})
-
-app.get('/get-dashboard', async (req, res) => {
-    try {
-        const data = await dashboard.find();
-        if (data) {
-            res.json({
-                success: true,
-                data: data
-            })
-        } else {
-            console.log("data not found");
-            res.json({
-                success: false,
-                message: "data not found"
-            })
-        }
-    } catch (error) {
-        console.log(error)
-        res.status(401).json({
-            success: false,
-            message: "internal server Error"
-        })
-    }
-})
-
-
->>>>>>> 835eaed (removed zip permanently)
 //getting admin data
 app.get('/get-admin', async (req, res) => {
     try {
@@ -221,7 +87,6 @@ app.get('/get-admin', async (req, res) => {
     }
 });
 // getting admin details
-<<<<<<< HEAD
 app.get('/get-admin-data/:username',async(req,res)=>{
     const {username} = req.params;
     let data = username
@@ -236,34 +101,13 @@ app.get('/get-admin-data/:username',async(req,res)=>{
             res.json({
                 success:true,
                 data:isAdmin
-=======
-app.get('/get-admin-data/:username', async (req, res) => {
-    const { username } = req.params;
-    let data = username
-    console.log(data)
-    if (!data) {
-        return res.status(404);
-    }
-    try {
-        const isAdmin = await admin.findOne({ username })
-        console.log(isAdmin);
-        if (isAdmin) {
-            res.json({
-                success: true,
-                data: isAdmin
->>>>>>> 835eaed (removed zip permanently)
             })
         }
     } catch (error) {
         console.log(error);
         res.json({
-<<<<<<< HEAD
             success:false,
             message:"failed to get data"
-=======
-            success: false,
-            message: "failed to get data"
->>>>>>> 835eaed (removed zip permanently)
         })
     }
 })
@@ -273,7 +117,6 @@ app.get('/get-admin-data/:username', async (req, res) => {
 app.put("/update-admin/:username", async (req, res) => {
     const { username } = req.params;
     const { newUsername, password } = req.body;
-<<<<<<< HEAD
   
     if (!username) {
       return res.status(400).json({
@@ -320,54 +163,6 @@ app.put("/update-admin/:username", async (req, res) => {
       });
     }
   });
-=======
-
-    if (!username) {
-        return res.status(400).json({
-            success: false,
-            message: "Username param missing"
-        });
-    }
-
-    if (!newUsername || !password) {
-        return res.status(400).json({
-            success: false,
-            message: "New username & password required"
-        });
-    }
-
-    try {
-        const updatedAdmin = await admin.findOneAndUpdate(
-            { username: username },
-            {
-                username: newUsername,
-                password: password
-            },
-            { new: true }
-        );
-
-        if (!updatedAdmin) {
-            return res.status(404).json({
-                success: false,
-                message: "Admin not found"
-            });
-        }
-
-        res.json({
-            success: true,
-            message: "Admin updated successfully",
-            data: updatedAdmin
-        });
-
-    } catch (error) {
-        console.error("UPDATE ERROR:", error);
-        res.status(500).json({
-            success: false,
-            message: "Server error"
-        });
-    }
-});
->>>>>>> 835eaed (removed zip permanently)
 
 //creating package
 const packageSchema = new mongoose.Schema({
@@ -380,10 +175,6 @@ const packageSchema = new mongoose.Schema({
 })
 const packages = packageConnection.model('package', packageSchema);
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 835eaed (removed zip permanently)
 app.post('/create-package', async (req, res) => {
     try {
         let isPackage = await packages.findOne({ name: req.body.name })
@@ -495,12 +286,6 @@ app.put('/update-package', async (req, res) => {
     }
 
 })
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 835eaed (removed zip permanently)
 //deleting packages
 app.delete('/delete-package/:id', async (req, res) => {
     try {
@@ -539,117 +324,6 @@ app.delete('/delete-package/:id', async (req, res) => {
     }
 });
 
-<<<<<<< HEAD
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
-=======
-/*===============================Payment============================ */
-app.put('/update-payment/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { status } = req.body; // true / false (BOOLEAN)
-
-        console.log(typeof status, status); // debug
-
-        const updatedOrder = await orders.findOneAndUpdate(
-            { _id: id },
-            { PaymentStatus: status },
-            { new: true }
-        );
-
-        if (!updatedOrder) {
-            return res.json({
-                success: false,
-                message: "Order not found"
-            });
-        }
-
-        res.json({
-            success: true,
-            data: updatedOrder
-        });
-
-    } catch (err) {
-        console.log(err);
-        res.json({
-            success: false
-        });
-    }
-});/* =============================================================
-Both User And Admin Apis
-============================================================ */
-const orderSchema = mongoose.Schema({
-    PackageName: String,
-    TravelDate: String,
-    NumberofPeople: Number,
-    pricePerPerson: Number,
-    Status: String,
-    PaymentStatus: Boolean
-});
-
-const orders = OrderCollection.model('order', orderSchema)
-app.get('/get-orders', async (req, res) => {
-    try {
-        const isOrder = await orders.find();
-
-        const count = await orders.countDocuments();
-        if (isOrder.length > 0) {
-
-            return res.json({
-                success: true,
-                data: isOrder,
-                count: count
-            })
-        } else {
-            return res.json({
-                success: false,
-                message: "noo orders"
-            })
-        }
-    } catch (error) {
-        console.log(error)
-        return res.json({
-            success: false,
-            message: "Internal Server Erro"
-        })
-    }
-});
-
-/*====================================================USER SECTION
-=========================================================================================================*/
-app.get('/get-userorders/:id', async (req, res) => {
-    const id = req.params.id;
-    if (id) {
-        try {
-            const request = await orders.find({ userId: id })
-            console.log(request)
-            if (request.length > 0) {
-                return res.status(200).json({
-                    success: true,
-                    data: request
-                })
-            } else {
-                return res.status(201).json({
-                    success: false,
-                    message: "orders not found"
-                })
-            }
-        } catch (error) {
-            res.json({
-                success: false,
-                message: "internal server error"
-            })
-            console.log(error)
-        }
-    } else {
-        return res.status(404)
-    }
-})
-
-
-
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
->>>>>>> 835eaed (removed zip permanently)
