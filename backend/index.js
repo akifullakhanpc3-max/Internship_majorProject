@@ -18,15 +18,18 @@ console.log(process.env.MONGO_URL)
 
 const AdminConnection = mongoose.createConnection(`${database}/admin`);
 const UserConnection = mongoose.createConnection(`${database}/user`);
-const packageConnection = mongoose.createConnection(`${database}/package`)
+const packageConnection = mongoose.createConnection(`${database}/package`);
+const OrderCollection = mongoose.createConnection(`${database}/orders`);
 
 
 if (AdminConnection) {
-    console.log("connect to admin")
+    console.log("connect to admin");
 }
 if (UserConnection) {
     console.log("conntect to user");
-
+}
+if (OrderCollection) {
+    console.log("connect to order collection");
 }
 
 
@@ -38,30 +41,123 @@ const adminSchema = new mongoose.Schema({
 });
 
 const admin = AdminConnection.model('admin', adminSchema);
-
 app.post('/admin', async (req, res) => {
     try {
-        console.log(req.body.username);
+        // ✅ check if ANY admin exists
+        const count = await admin.countDocuments();
+
+        // 👉 if no data → create default admin
+        if (count === 0) {
+            await admin.create({
+                username: "admin",
+                password: "admin"
+            });
+
+            return res.json({
+                success: true,
+                message: "Default admin created. Use username: admin, password: admin"
+            });
+        }
+
+        // ✅ login logic
         const { username, password } = req.body;
-        console.log(username)
 
         const adminData = await admin.findOne({ username });
 
         if (!adminData) {
-            return res.status(401).json({ success: false });
+            return res.status(401).json({
+                success: false,
+                message: "Admin not found"
+            });
         }
 
         if (adminData.password === password) {
-            return res.json({ success: true });
+            return res.json({
+                success: true,
+                message: "Login successful"
+            });
         } else {
-            return res.status(401).json({ success: false });
+            return res.status(401).json({
+                success: false,
+                message: "Wrong password"
+            });
         }
 
     } catch (error) {
-        res.status(500).json({ success: false });
-        console.log(error)
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
     }
 });
+
+//getting dashboard data
+const dashboardSchema = mongoose.Schema({
+    orders: Number,
+    revenue: Number,
+    users: Number,
+    pending: Number
+})
+
+const dashboard = AdminConnection.model('dashboard', dashboardSchema);
+
+app.put('/amount', async (req, res) => {
+    try {
+
+        const response = await orders.find({ PaymentStatus: true })
+        const booking = await orders.countDocuments()
+        // console.log(booking);
+        let amount = 0;
+        const pending = await orders.countDocuments({ PaymentStatus: false })
+        // console.log(response.length);
+
+        if (response.length > 0) {
+            response.map((ele) => {
+                amount += (ele.NumberofPeople * ele.pricePerPerson)
+            })
+            const update = await dashboard.findOneAndUpdate({},
+                { revenue: amount, orders: booking, pending }
+            )
+            if (update) {
+                console.log("amount updated")
+                res.json({
+                    success: true
+                })
+            }
+        }
+        // console.log(amount);
+
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.get('/get-dashboard', async (req, res) => {
+    try {
+        const data = await dashboard.find();
+        if (data) {
+            res.json({
+                success: true,
+                data: data
+            })
+        } else {
+            console.log("data not found");
+            res.json({
+                success: false,
+                message: "data not found"
+            })
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(401).json({
+            success: false,
+            message: "internal server Error"
+        })
+    }
+})
+
+
 //getting admin data
 app.get('/get-admin', async (req, res) => {
     try {
@@ -87,27 +183,27 @@ app.get('/get-admin', async (req, res) => {
     }
 });
 // getting admin details
-app.get('/get-admin-data/:username',async(req,res)=>{
-    const {username} = req.params;
+app.get('/get-admin-data/:username', async (req, res) => {
+    const { username } = req.params;
     let data = username
     console.log(data)
-    if(!data){
+    if (!data) {
         return res.status(404);
     }
     try {
-        const isAdmin=await admin.findOne({username})
+        const isAdmin = await admin.findOne({ username })
         console.log(isAdmin);
-        if(isAdmin){
+        if (isAdmin) {
             res.json({
-                success:true,
-                data:isAdmin
+                success: true,
+                data: isAdmin
             })
         }
     } catch (error) {
         console.log(error);
         res.json({
-            success:false,
-            message:"failed to get data"
+            success: false,
+            message: "failed to get data"
         })
     }
 })
@@ -117,52 +213,52 @@ app.get('/get-admin-data/:username',async(req,res)=>{
 app.put("/update-admin/:username", async (req, res) => {
     const { username } = req.params;
     const { newUsername, password } = req.body;
-  
+
     if (!username) {
-      return res.status(400).json({
-        success: false,
-        message: "Username param missing"
-      });
-    }
-  
-    if (!newUsername || !password) {
-      return res.status(400).json({
-        success: false,
-        message: "New username & password required"
-      });
-    }
-  
-    try {
-      const updatedAdmin = await admin.findOneAndUpdate(
-        { username: username },
-        {
-          username: newUsername,
-          password: password
-        },
-        { new: true }
-      );
-  
-      if (!updatedAdmin) {
-        return res.status(404).json({
-          success: false,
-          message: "Admin not found"
+        return res.status(400).json({
+            success: false,
+            message: "Username param missing"
         });
-      }
-  
-      res.json({
-        success: true,
-        message: "Admin updated successfully",
-        data: updatedAdmin
-      });
-  
-    } catch (error) {
-      console.error("UPDATE ERROR:", error);
-      res.status(500).json({
-        success: false,
-        message: "Server error"
-      });
     }
-  });
+
+    if (!newUsername || !password) {
+        return res.status(400).json({
+            success: false,
+            message: "New username & password required"
+        });
+    }
+
+    try {
+        const updatedAdmin = await admin.findOneAndUpdate(
+            { username: username },
+            {
+                username: newUsername,
+                password: password
+            },
+            { new: true }
+        );
+
+        if (!updatedAdmin) {
+            return res.status(404).json({
+                success: false,
+                message: "Admin not found"
+            });
+        }
+
+        res.json({
+            success: true,
+            message: "Admin updated successfully",
+            data: updatedAdmin
+        });
+
+    } catch (error) {
+        console.error("UPDATE ERROR:", error);
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
+    }
+});
 
 //creating package
 const packageSchema = new mongoose.Schema({
@@ -174,6 +270,7 @@ const packageSchema = new mongoose.Schema({
     days: Number
 })
 const packages = packageConnection.model('package', packageSchema);
+
 
 app.post('/create-package', async (req, res) => {
     try {
@@ -286,6 +383,9 @@ app.put('/update-package', async (req, res) => {
     }
 
 })
+
+
+
 //deleting packages
 app.delete('/delete-package/:id', async (req, res) => {
     try {
@@ -323,6 +423,111 @@ app.delete('/delete-package/:id', async (req, res) => {
         });
     }
 });
+
+/*===============================Payment============================ */
+app.put('/update-payment/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body; // true / false (BOOLEAN)
+
+        console.log(typeof status, status); // debug
+
+        const updatedOrder = await orders.findOneAndUpdate(
+            { _id: id },
+            { PaymentStatus: status },
+            { new: true }
+        );
+
+        if (!updatedOrder) {
+            return res.json({
+                success: false,
+                message: "Order not found"
+            });
+        }
+
+        res.json({
+            success: true,
+            data: updatedOrder
+        });
+
+    } catch (err) {
+        console.log(err);
+        res.json({
+            success: false
+        });
+    }
+});/* =============================================================
+Both User And Admin Apis
+============================================================ */
+const orderSchema = mongoose.Schema({
+    PackageName: String,
+    TravelDate: String,
+    NumberofPeople: Number,
+    pricePerPerson: Number,
+    Status: String,
+    PaymentStatus: Boolean
+});
+
+const orders = OrderCollection.model('order', orderSchema)
+app.get('/get-orders', async (req, res) => {
+    try {
+        const isOrder = await orders.find();
+
+        const count = await orders.countDocuments();
+        if (isOrder.length > 0) {
+
+            return res.json({
+                success: true,
+                data: isOrder,
+                count: count
+            })
+        } else {
+            return res.json({
+                success: false,
+                message: "noo orders"
+            })
+        }
+    } catch (error) {
+        console.log(error)
+        return res.json({
+            success: false,
+            message: "Internal Server Erro"
+        })
+    }
+});
+
+/*====================================================USER SECTION
+=========================================================================================================*/
+app.get('/get-userorders/:id', async (req, res) => {
+    const id = req.params.id;
+    if (id) {
+        try {
+            const request = await orders.find({ userId: id })
+            console.log(request)
+            if (request.length > 0) {
+                return res.status(200).json({
+                    success: true,
+                    data: request
+                })
+            } else {
+                return res.status(201).json({
+                    success: false,
+                    message: "orders not found"
+                })
+            }
+        } catch (error) {
+            res.json({
+                success: false,
+                message: "internal server error"
+            })
+            console.log(error)
+        }
+    } else {
+        return res.status(404)
+    }
+})
+
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
