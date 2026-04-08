@@ -1,153 +1,112 @@
-/* ===== LOADING STATE ===== */
+/* ================= PAGE ================= */
+.orders-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+/* loading state */
 .ifLoading {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-
-  background: linear-gradient(135deg, #020617, #1e293b);
+  height: 80vh;
 }
 
-/* ===== MAIN CONTAINER ===== */
-.orders-container {
-  width: 100%;
-  max-width: 1000px;
-  margin: 30px auto;
-  padding: 15px;
-
-  animation: fadeIn 0.5s ease;
+/* ================= TITLE ================= */
+.orders-title {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: #111827;
 }
 
-/* ===== ORDER CARD ===== */
-.order {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
+/* ================= ORDER CARD ================= */
+.order-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
 
-  border-radius: 16px;
-  padding: 20px 24px;
-  margin-bottom: 20px;
+  padding: 18px;
+  margin-bottom: 18px;
 
-  border-left: 5px solid #6366f1;
-
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
 
-/* Hover */
-.order:hover {
-  transform: translateY(-6px) scale(1.01);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+/* hover */
+.order-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
 }
 
-/* ===== TEXT STYLING ===== */
-.order p {
-  margin: 10px 0;
-  font-size: 15px;
-  color: #e2e8f0;
+/* ================= TITLE ================= */
+.order-card h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #1f2937;
+}
+
+/* ================= DETAILS ================= */
+.order-card p {
+  font-size: 14px;
+  color: #4b5563;
+  margin: 6px 0;
 
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
-/* Highlight values */
-.order p span {
+/* values */
+.order-card span {
+  font-weight: 500;
+  color: #111827;
+}
+
+/* ================= PRICE HIGHLIGHT ================= */
+.order-card p:nth-last-child(3) span {
+  color: #4f46e5;
   font-weight: 600;
-  color: #c7d2fe;
 }
 
-/* ===== STATUS COLORS ===== */
-.order p:nth-child(7) span {
-  color: #22c55e; /* booked */
+/* total highlight */
+.order-card p:nth-last-child(2) span {
+  color: #16a34a;
+  font-weight: 600;
 }
 
-.order p:nth-child(8) span {
-  color: #facc15; /* payment */
-}
-
-/* ===== NO ORDERS ===== */
-.noOrders {
-  text-align: center;
-  margin-top: 60px;
-  font-size: 24px;
-  color: #cbd5f5;
+/* ================= STATUS ================= */
+.order-card p:nth-last-child(1) span {
   font-weight: 500;
 }
 
-/* ===== ANIMATION ===== */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ================= PAYMENT ================= */
+.order-card span:contains("Paid") {
+  color: #16a34a;
 }
 
-/* ===== TABLET ===== */
-@media (max-width: 768px) {
-  .orders-container {
-    padding: 10px;
-  }
-
-  .order {
-    padding: 16px;
-    border-radius: 14px;
-  }
-
-  .order p {
-    font-size: 14px;
-  }
+.order-card span:contains("Pending") {
+  color: #f59e0b;
 }
 
-/* ===== MOBILE ===== */
-@media (max-width: 480px) {
-  .orders-container {
-    padding: 8px;
-  }
-
-  .order {
-    padding: 14px;
-    border-radius: 12px;
-  }
-
-  .order p {
-    font-size: 13px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-  }
-
-  .order p span {
-    font-size: 14px;
-  }
-
-  .noOrders {
-    font-size: 20px;
-  }
-}
-.orders-container {
-  position: relative;
-  min-height: 100vh;
-  padding: 40px;
-  background: linear-gradient(135deg, hwb(220 95% 4%), #d8dce1);
-  border-radius: 10px ;
+/* ================= EMPTY ================= */
+.noOrders {
+  text-align: center;
+  color: #6b7280;
+  margin-top: 40px;
 }
 
-/* DARK OVERLAY */
-.orders-container::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6); /* 👈 THIS FIXES VISIBILITY */
-  z-index: 0;
-}
+/* ================= RESPONSIVE ================= */
+@media (max-width: 600px) {
+  .orders-title {
+      font-size: 22px;
+  }
 
-/* Keep content above overlay */
-.orders-container > * {
-  position: relative;
-  z-index: 1;
+  .order-card {
+      padding: 14px;
+  }
+
+  .order-card p {
+      font-size: 13px;
+  }
 }

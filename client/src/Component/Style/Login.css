@@ -1,86 +1,140 @@
-/* Full page background */
+/* ================= PAGE ================= */
 .login-container {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: #f8fafc;
+  animation: pageFade 0.6s ease;
 }
 
-/* Card */
+/* ================= CARD ================= */
 .login-card {
-  width: 350px;
-  padding: 30px;
-  border-radius: 18px;
+  width: 100%;
+  max-width: 360px;
 
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(15px);
+  background: #ffffff;
+  padding: 28px;
 
-  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
 
   display: flex;
   flex-direction: column;
-  gap: 15px;
-
-  animation: fadeIn 0.5s ease;
+  gap: 16px;
+  animation: cardEnter 0.6s ease;
 }
 
-/* Title */
-.login-card h2 {
-  text-align: center;
-  color: white;
+/* ================= TITLE ================= */
+.login-card::before {
+  content: "Welcome Back 👋";
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+
+  margin-bottom: 5px;
 }
 
-/* Inputs */
+/* ================= INPUT ================= */
 .login-card input {
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
+  padding: 12px 14px;
 
-  background: rgba(255,255,255,0.1);
-  color: white;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
 
+  font-size: 14px;
   outline: none;
+
+  transition: 0.2s ease;
+  transition: all 0.25s ease;
 }
 
-.login-card input::placeholder {
-  color: #cbd5f5;
+/* focus */
+.login-card input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+  transform: scale(1.02);
+
 }
 
-/* Button */
+/* ================= BUTTON ================= */
 .login-card button {
   padding: 12px;
-  border: none;
-  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
 
-  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  border-radius: 8px;
+  border: none;
+
+  background: #4f46e5;
   color: white;
 
+  font-size: 14px;
+  font-weight: 500;
+
   cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* hover */
+.login-card button:hover {
+  background: #4338ca;
+  transform: translateY(-2px);
+}
+
+/* click */
+.login-card button:active {
+  transform: scale(0.97);
+  transform: scale(0.98);
+}
+
+.login-card:hover {
+  transform: translateY(-4px);
+  transition: 0.3s ease;
+}
+
+.login-card button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  opacity: 0;
+  box-shadow: 0 0 20px rgba(79, 70, 229, 0.5);
   transition: 0.3s;
 }
 
-.login-card button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(99,102,241,0.6);
+.login-card button:hover::after {
+  opacity: 1;
 }
 
-/* Animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Mobile */
+/* ================= RESPONSIVE ================= */
 @media (max-width: 500px) {
   .login-card {
-    width: 90%;
+    padding: 22px;
+  }
+}
+
+@keyframes pageFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }

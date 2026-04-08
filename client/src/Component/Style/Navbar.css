@@ -16,23 +16,64 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    gap: 8px;
+    gap: 12px;
 }
-
 .nav-links a {
     text-decoration: none;
     color: rgb(54, 54, 54);
     font-size: 18px;
-    border-radius: 4px;
+    padding: 8px 8px;
+    border-radius: 30px;
+
+    position: relative; /* ✅ IMPORTANT */
+    display: inline-block;
+
+    transition:
+        color 0.3s ease,
+        transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+        background-color 0.3s ease;
 }
 
+/* Hover main */
 .nav-links a:hover {
-    background-color: rgb(14, 137, 190);
-    color: white;
-    padding: 6px 12px;
-    transition: all 0.3s ease-in-out;
+    color: rgb(14, 137, 190);
+    /* background-color: rgba(14, 137, 190, 0.08); */
+
+    transform: translateY(-2px) scale(1.05);
 }
 
+/* UNDERLINE */
+.nav-links a::after {
+    content: "";
+    position: absolute;
+
+    left: 50%;
+    bottom: -4px; /* 👈 gives breathing space */
+
+    width: 0%;
+    height: 2px;
+
+    background: linear-gradient(
+        90deg,
+        rgb(14, 137, 190),
+        rgb(0, 200, 255)
+    ); /* ✨ gradient = premium */
+
+    border-radius: 10px;
+
+    transform: translateX(-50%);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover underline */
+.nav-links a:hover::after {
+    width: 70%; /* 👈 not full = more elegant */
+}
+
+/* Optional glow (next level 🔥) */
+.nav-links a:hover::after {
+    box-shadow: 0 0 8px rgba(14, 137, 190, 0.4);
+}
 .auth-links {
     display: flex;
     align-items: center;
@@ -65,10 +106,10 @@
     color: white;
     padding: 6px 12px;
 }
+
 .auth-links :nth-child(2):hover {
     color: rgb(14, 137, 190);
     color: white;
     padding: 6px 12px;
     transition: all 0.3s ease-in-out;
 }
-

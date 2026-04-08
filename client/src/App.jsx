@@ -17,7 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="orders" element={<Orders />}></Route>
-          <Route path="cart" element={<h1>this is cart component</h1>}></Route>
+          <Route path="cart" element={<Cart/>}></Route>
           <Route path="/packages" element={<Packages></Packages>}></Route>
           <Route path="/package/:id" element={<PackageDetails />}></Route>
           <Route path="*" element={<h1> 404 not found</h1>}></Route>

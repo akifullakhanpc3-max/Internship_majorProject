@@ -119,7 +119,7 @@ const handleBooking = async () => {
               type="number"
               name="people"
               placeholder="Number of People"
-              value={form.people}
+              // value={form.people}
               onChange={handleChange}
             />
 

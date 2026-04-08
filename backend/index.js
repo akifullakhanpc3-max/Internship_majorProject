@@ -607,6 +607,43 @@ app.post("/login", async (req, res) => {
   }
 });
 
+/* =========================CART ITEMS====================== */
+const cartSchema = mongoose.Schema({
+  userId: String,
+      packageId: String,
+      name: String,
+      price: Number,
+      image: String,
+      days: Number,
+
+});
+
+// const cartCollection = orders.model("cart", cartSchema);
+// app.get("/get-cart/:userId", async (req, res) => {
+//   const { userId } = req.params;
+
+//   if (!userId) {
+//     return res.status(400).json({
+//       success: false,
+//       message: "User ID is required",
+//     });
+//   }
+//   try {
+//     const cartItems = await cartCollection.find({ userId });
+
+//     res.json({
+//       success: true,
+//       data: cartItems,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({
+//       success: false,
+//       message: "Failed to fetch cart items",
+//     });
+//   }
+// });
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
