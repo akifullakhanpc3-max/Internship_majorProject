@@ -5,6 +5,7 @@ import "./Style/Packages.css";
 
 function Packages() {
   const navigate = useNavigate();
+
   const [pkg, setPkg] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,41 +26,66 @@ function Packages() {
     fetchPackages();
   }, [url]);
 
-  if (loading) return <h2>Loading packages...</h2>;
+  /* ================= LOADING STATE ================= */
+  if (loading) {
+    return (
+      <div className="page-container">
+        <div className="package">
+          <h2 className="loading-text">Loading packages...</h2>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="page-container">
-      {/* page content */}
-
       <div className="package">
-        <div className="package-header">Explore Travel Packages 🌍</div>
+        {/* HEADER */}
+        <div className="package-header">
+          Explore Travel Packages 🌍
+        </div>
 
+        {/* LIST */}
         <div className="package-list">
           {pkg.length === 0 ? (
-            <h3>No packages available</h3>
+            <h3 className="empty-state">No packages available</h3>
           ) : (
             pkg.map((item) => (
-              <div key={item._id} className="package-item">
-                <img src={item.image} alt={item.name} />
+              <div
+                key={item._id}
+                className="package-item"
+                onClick={() => navigate(`/package/${item._id}`)}
+              >
+                {/* IMAGE */}
+                <div className="image-wrapper">
+                  <img src={item.image} alt={item.name} />
+                </div>
 
-                <h3>{item.name}</h3>
-                <p>₹ {item.price}</p>
-                <p>{item.days} days</p>
+                {/* CONTENT */}
+                <div className="content">
+                  <h3>{item.name}</h3>
 
-                <button
-                  onClick={() => {
-                    console.log("Clicked", item._id);
-                    navigate(`/package/${item._id}`);
-                  }}
-                >
-                  View Details
-                </button>
+                  {/* META INFO */}
+                  <div className="meta">
+                    <span className="price">₹ {item.price}</span>
+                    <span className="days">{item.days} days</span>
+                  </div>
+
+                  {/* BUTTON */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation(); // prevent card click
+                      navigate(`/package/${item._id}`);
+                    }}
+                  >
+                    View Details
+                  </button>
+                </div>
               </div>
             ))
           )}
         </div>
       </div>
-      
     </div>
   );
 }

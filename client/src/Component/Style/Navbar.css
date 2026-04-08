@@ -1,31 +1,74 @@
-.navbar{
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 10vh;
-    background-color: rgba(97, 98, 98,0.1);
-    backdrop-filter: blur(10px);
+    background-color: rgb(255, 255, 255);
     padding: 4px;
 }
-.navbar .logo{
+
+.navbar .logo {
     font-size: 24px;
     font-weight: bold;
 }
-.nav-links{
+
+.nav-links {
     display: flex;
     align-items: center;
     justify-content: space-around;
     gap: 8px;
 }
-.nav-links a{
+
+.nav-links a {
     text-decoration: none;
-    color: white;
+    color: rgb(54, 54, 54);
     font-size: 18px;
     border-radius: 4px;
 }
-.nav-links a:hover{
+
+.nav-links a:hover {
     background-color: rgb(14, 137, 190);
     color: white;
     padding: 6px 12px;
     transition: all 0.3s ease-in-out;
 }
+
+.auth-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.auth-links a {
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.login {
+    border: 1px solid rgb(14, 137, 190);
+    color: rgb(14, 137, 190);
+    ;
+    padding: 6px 12px;
+}
+
+.login:hover {
+    background-color: rgb(14, 137, 190);
+    color: white;
+    padding: 6px 12px;
+    transition: all 0.3s ease-in-out;
+}
+
+.auth-links :nth-child(2) {
+    background-color: rgb(14, 137, 190);
+    color: white;
+    padding: 6px 12px;
+}
+.auth-links :nth-child(2):hover {
+    color: rgb(14, 137, 190);
+    color: white;
+    padding: 6px 12px;
+    transition: all 0.3s ease-in-out;
+}
+

@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import './Style/Navbar.css';
+import Dashboard from './Dashboard';
 
 function Navbar() {
   const userId = localStorage.getItem("userId");
@@ -30,13 +31,9 @@ function Navbar() {
         {/* ✅ SHOW ONLY IF LOGGED IN */}
         {userId && (
           <>
-            <NavLink to="/orders" className={({ isActive }) => isActive ? "active" : ""}>
-              Orders
-            </NavLink>
+            
 
-            <NavLink to="/cart" className={({ isActive }) => isActive ? "active" : ""}>
-              <ShoppingCartIcon />
-            </NavLink>
+            
           </>
         )}
       </div>
@@ -44,13 +41,14 @@ function Navbar() {
       <div>
         {/* ✅ SHOW LOGIN/SIGNUP IF NOT LOGGED IN */}
         {!userId ? (
-          <>
-            <NavLink to="/login">Login</NavLink>
+          <div className='auth-links'>
+            <NavLink className='login'to="/login">Login</NavLink>
             <NavLink to="/signup">Signup</NavLink>
-          </>
+
+          </div>
         ) : (
           <>
-            <button onClick={handleLogout}>Logout</button>
+            <Dashboard/>
           </>
         )}
       </div>
