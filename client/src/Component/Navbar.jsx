@@ -1,26 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import './Style/Navbar.css';
-import Dashboard from './Dashboard';
 
 function Navbar() {
-  const [dashboardOpen, setDashboardOpen] = useState(false);
+  const userId = localStorage.getItem("userId");
 
-  const toggleDashboard = () => {
-    setDashboardOpen(!dashboardOpen);
+  const handleLogout = () => {
+    localStorage.removeItem("userId");
+    window.location.href = "/";
   };
 
   return (
-    <div className="navbar">
-
-      {/* Logo */}
-      <div className="logo">
-        <img src="/logo.png" alt="Logo" />
+    <div className='navbar'>
+      
+      <div>
+        <img src="./lala" alt="Logo" />
       </div>
 
-      {/* Links */}
-      <div className="nav-links">
+      <div className='nav-links'>
         <NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>
           Home
         </NavLink>
@@ -29,28 +27,33 @@ function Navbar() {
           Packages
         </NavLink>
 
-        {/* <NavLink to="/orders" className={({ isActive }) => isActive ? "active" : ""}>
-          Orders
-        </NavLink> */}
+        {/* ✅ SHOW ONLY IF LOGGED IN */}
+        {userId && (
+          <>
+            <NavLink to="/orders" className={({ isActive }) => isActive ? "active" : ""}>
+              Orders
+            </NavLink>
 
-        {/* <NavLink to="/cart" className={({ isActive }) => isActive ? "active" : ""}>
-          <ShoppingCartIcon />
-        </NavLink> */}
-      </div>
-
-      {/* Dashboard */}
-      <div className="dashboard-section">
-        <button onClick={toggleDashboard} className="dashboard-btn">
-          Dashboard
-        </button>
-
-        {dashboardOpen && (
-          <div className="dashboard-dropdown">
-            <Dashboard />
-          </div>
+            <NavLink to="/cart" className={({ isActive }) => isActive ? "active" : ""}>
+              <ShoppingCartIcon />
+            </NavLink>
+          </>
         )}
       </div>
 
+      <div>
+        {/* ✅ SHOW LOGIN/SIGNUP IF NOT LOGGED IN */}
+        {!userId ? (
+          <>
+            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/signup">Signup</NavLink>
+          </>
+        ) : (
+          <>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        )}
+      </div>
     </div>
   );
 }

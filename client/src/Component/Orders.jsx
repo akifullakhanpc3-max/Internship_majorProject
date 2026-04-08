@@ -1,85 +1,88 @@
-import React, { useEffect, useState } from 'react';
-import Loading from './Loading.jsx';
-import './Style/Orders.css';
-import Axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import Loading from "./Loading.jsx";
+import "./Style/Orders.css";
+import axios from "axios";
 
 function Orders() {
-  const url = process.env.REACT_APP_SERVER_URL;
-  const navigate = useNavigate();
+  const userId = localStorage.getItem("userId");
+  const url = process.env.REACT_APP_SERVER_URL || "http://localhost:5000";
+
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
 
-  const id = 123;
-  // const id = localStorage.getItem('userId');
-
   useEffect(() => {
     async function getOrders() {
+      if (!userId) {
+        setLoading(false);
+        return;
+      }
+
       try {
         setLoading(true);
 
-        const response = await Axios.get(`${url}/get-userorders/${id}`);
+        const response = await axios.get(`${url}/get-userorders/${userId}`);
 
-        if (response.status === 200) {
+        console.log("Orders Response:", response.data);
+
+        if (response.status === 200 && response.data.success) {
           setOrders(response.data.data);
+        } else {
+          setOrders([]);
         }
       } catch (error) {
-        console.error('Error fetching orders:', error);
+        console.error("Error fetching orders:", error);
+        setOrders([]);
       } finally {
         setLoading(false);
       }
     }
 
     getOrders();
-  }, [url, id]);
+  }, [url, userId]);
 
-  async function handeldelete(id) {
-    try {
-      setLoading(true);
-      const response = await Axios.delete(`${url}/delete-order/${id}`);
-      if (response.status === 200) {
-        setLoading(false);
-        setOrders(orders.filter(order => order._id !== id));
-      }
-    } catch (error) {
+  // ✅ AFTER hooks (safe)
+  if (!userId) {
+    return <h2>Please login first 🔐</h2>;
+  }
 
-    }
-  }
-  // const laa='69c451ec433a1a7ff3f03840'
-  // handelnavigate(laa)
-  async function handelnavigate(id){
-    navigate(`/packages/${id}`);
-  }
   return (
     <div className={loading ? "ifLoading" : "orders-container"}>
-
       {loading ? (
         <Loading />
       ) : (
         <div>
+          <h1 className="orders-title">My Orders 📦</h1>
+
           {orders.length > 0 ? (
             orders.map((item) => (
-              <div onclick={handelnavigate(item._packageId)} className="order" key={item._packageId}>
+              <div className="order-card" key={item._id}>
+                <h2>{item.PackageName}</h2>
+
+                <p>👤 Name: <span>{item.customerName}</span></p>
+                <p>👥 People: <span>{item.NumberofPeople}</span></p>
+                <p>📅 Travel Date: <span>{item.TravelDate}</span></p>
+
+                <p>💰 Price / Person: <span>₹ {item.pricePerPerson}</span></p>
+
                 <p>
-                  Product Name: <span>{item.PackageName}</span>
+                  💵 Total:
+                  <span>
+                    ₹ {item.pricePerPerson * item.NumberofPeople}
+                  </span>
                 </p>
+
+                <p>📦 Status: <span>{item.Status}</span></p>
+
                 <p>
-                  Price / person: <span>${item.pricePerPerson}</span>
+                  💳 Payment:
+                  <span>
+                    {item.PaymentStatus ? " Paid ✅" : " Pending ⏳"}
+                  </span>
                 </p>
-                <p>
-                  Quantity: <span>{item.person}</span>
-                </p>
-                <p>
-                  Total Amount:{" "}
-                  <span>${item.totalAmount * item.person}</span>
-                </p>
-                <button onclick={
-                  handeldelete(item._id)
-                }>Delete Order</button>
               </div>
             ))
           ) : (
-            <h1 className="noOrders">No Orders Yet</h1>
+            <h1 className="noOrders">No Orders Yet 😔</h1>
           )}
         </div>
       )}

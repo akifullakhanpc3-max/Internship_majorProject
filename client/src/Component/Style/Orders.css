@@ -1,173 +1,153 @@
-/* =========================
-   LOADING STATE
-========================= */
+/* ===== LOADING STATE ===== */
 .ifLoading {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 70vh;
+  min-height: 100vh;
+
+  background: linear-gradient(135deg, #020617, #1e293b);
 }
 
-/* =========================
- MAIN CONTAINER
-========================= */
+/* ===== MAIN CONTAINER ===== */
 .orders-container {
   width: 100%;
   max-width: 1000px;
-  margin: 40px auto;
-  padding: 20px;
+  margin: 30px auto;
+  padding: 15px;
+
+  animation: fadeIn 0.5s ease;
 }
 
-/* =========================
- ORDER CARD
-========================= */
+/* ===== ORDER CARD ===== */
 .order {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+
   border-radius: 16px;
   padding: 20px 24px;
   margin-bottom: 20px;
 
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-  border-left: 6px solid #22c55e;
+  border-left: 5px solid #6366f1;
 
-  transition: all 0.25s ease;
-  position: relative;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+
+  transition: all 0.3s ease;
 }
 
 /* Hover */
 .order:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
 }
 
-/* =========================
- ORDER HEADER (Optional)
-========================= */
-.order::before {
-  content: "Order";
-  position: absolute;
-  top: -10px;
-  left: 15px;
-  background: #22c55e;
-  color: white;
-  font-size: 11px;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-weight: 500;
-}
-
-/* =========================
- TEXT STYLING
-========================= */
+/* ===== TEXT STYLING ===== */
 .order p {
   margin: 10px 0;
   font-size: 15px;
-  color: #475569;
+  color: #e2e8f0;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* Label */
-.order p strong {
-  font-weight: 500;
-  color: #64748b;
-}
-
-/* Value */
+/* Highlight values */
 .order p span {
   font-weight: 600;
-  color: #0f172a;
+  color: #c7d2fe;
 }
 
-/* =========================
- PRICE HIGHLIGHT
-========================= */
-.order .price {
-  color: #2563eb;
-  font-weight: 700;
+/* ===== STATUS COLORS ===== */
+.order p:nth-child(7) span {
+  color: #22c55e; /* booked */
 }
 
-/* =========================
- STATUS BADGE
-========================= */
-.status {
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
+.order p:nth-child(8) span {
+  color: #facc15; /* payment */
 }
 
-/* Example statuses */
-.status.success {
-  background: #dcfce7;
-  color: #16a34a;
-}
-
-.status.pending {
-  background: #fef9c3;
-  color: #ca8a04;
-}
-
-.status.cancelled {
-  background: #fee2e2;
-  color: #dc2626;
-}
-
-/* =========================
- NO ORDERS
-========================= */
+/* ===== NO ORDERS ===== */
 .noOrders {
   text-align: center;
-  margin-top: 80px;
-  font-size: 22px;
-  color: #94a3b8;
+  margin-top: 60px;
+  font-size: 24px;
+  color: #cbd5f5;
   font-weight: 500;
 }
 
-/* =========================
- TABLET
-========================= */
-@media (max-width: 768px) {
-  .orders-container {
-      padding: 15px;
+/* ===== ANIMATION ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-
-  .order {
-      padding: 18px;
-  }
-
-  .order p {
-      font-size: 14px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* =========================
- MOBILE
-========================= */
-@media (max-width: 480px) {
+/* ===== TABLET ===== */
+@media (max-width: 768px) {
   .orders-container {
-      padding: 10px;
+    padding: 10px;
   }
 
   .order {
-      padding: 16px;
-      border-radius: 12px;
+    padding: 16px;
+    border-radius: 14px;
   }
 
   .order p {
-      font-size: 13px;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 5px;
+    font-size: 14px;
+  }
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 480px) {
+  .orders-container {
+    padding: 8px;
+  }
+
+  .order {
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  .order p {
+    font-size: 13px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
   }
 
   .order p span {
-      font-size: 14px;
+    font-size: 14px;
   }
 
   .noOrders {
-      font-size: 18px;
+    font-size: 20px;
   }
+}
+.orders-container {
+  position: relative;
+  min-height: 100vh;
+  padding: 40px;
+  background: linear-gradient(135deg, hwb(220 95% 4%), #d8dce1);
+  border-radius: 10px ;
+}
+
+/* DARK OVERLAY */
+.orders-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6); /* 👈 THIS FIXES VISIBILITY */
+  z-index: 0;
+}
+
+/* Keep content above overlay */
+.orders-container > * {
+  position: relative;
+  z-index: 1;
 }

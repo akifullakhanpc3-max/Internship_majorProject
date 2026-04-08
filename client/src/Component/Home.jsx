@@ -1,12 +1,13 @@
-import React from 'react';
-import './Style/Home.css';
+import React from "react";
+import "./Style/Home.css";
 
 function Home() {
-    return (
-        <div>
-            Welcome to the Home Page!
-        </div>
-    )
+  return (
+    <div className="page-container">
+      {/* page content */}
+      <div>Welcome to the Home Page!</div>
+    </div>
+  );
 }
 
-export default Home
+export default Home;
