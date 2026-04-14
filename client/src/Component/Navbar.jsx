@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import './Style/Navbar.css';
@@ -6,6 +6,7 @@ import Dashboard from './Dashboard';
 
 function Navbar() {
   const userId = localStorage.getItem("userId");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("userId");
@@ -14,42 +15,51 @@ function Navbar() {
 
   return (
     <div className='navbar'>
-      
-      <div>
+
+      {/* LOGO */}
+      <div className='logo'>
         <img src="./lala" alt="Logo" />
       </div>
 
-      <div className='nav-links'>
-        <NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>
-          Home
-        </NavLink>
+      {/* HAMBURGER */}
+      <div
+        className={`hamburger ${menuOpen ? "active" : ""}`}
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
 
-        <NavLink to="/packages" className={({ isActive }) => isActive ? "active" : ""}>
-          Packages
-        </NavLink>
+      {/* NAV LINKS */}
+      <div className={`nav-links ${menuOpen ? "open" : ""}`}>
+        <NavLink to="/" onClick={() => setMenuOpen(false)}>Home</NavLink>
+        <NavLink to="/packages" onClick={() => setMenuOpen(false)}>Packages</NavLink>
+        <NavLink to="/aboutus" onClick={() => setMenuOpen(false)}>About us</NavLink>
+        <NavLink to={'/contact'} onClick={()=>setMenuOpen(false)}>Contact</NavLink>
 
-        {/* ✅ SHOW ONLY IF LOGGED IN */}
-        {userId && (
-          <>
-            
-
-            
-          </>
+        {/* AUTH INSIDE MOBILE MENU */}
+        {!userId ? (
+          <div className='auth-links mobile-auth'>
+            <NavLink className='login' to="/login" onClick={() => setMenuOpen(false)}>Login</NavLink>
+            <NavLink to="/signup" onClick={() => setMenuOpen(false)}>Signup</NavLink>
+          </div>
+        ) : (
+          <div className="mobile-auth">
+            <Dashboard />
+          </div>
         )}
       </div>
 
-      <div>
-        {/* ✅ SHOW LOGIN/SIGNUP IF NOT LOGGED IN */}
+      {/* DESKTOP AUTH */}
+      <div className='desktop-auth'>
         {!userId ? (
           <div className='auth-links'>
-            <NavLink className='login'to="/login">Login</NavLink>
+            <NavLink className='login' to="/login">Login</NavLink>
             <NavLink to="/signup">Signup</NavLink>
-
           </div>
         ) : (
-          <>
-            <Dashboard/>
-          </>
+          <Dashboard />
         )}
       </div>
     </div>

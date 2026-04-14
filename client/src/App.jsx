@@ -8,6 +8,8 @@ import PackageDetails from "./Component/PackageDetails";
 import Login from "./Component/Login";
 import SignUp from "./Component/SignUp";
 import Cart from "./Component/Cart";
+import Aboutus from "./Aboutus";
+import Contact from "./Contact";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/aboutus" element={<Aboutus />} />
+          <Route path="/contact" element={<Contact></Contact>} />
         </Routes>
       </Router>
     </div>
