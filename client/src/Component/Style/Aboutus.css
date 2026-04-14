@@ -1,0 +1,117 @@
+/* GLOBAL */
+.about-container {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+  }
+  
+  /* HERO */
+  .about-hero {
+    text-align: center;
+    padding: 80px 20px;
+    background-image: url('../../assects/images/aboutus.avif');
+    background-size: cover;
+    background-position: center;
+
+    color: white;
+  }
+  
+  .about-hero h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+  
+  .about-hero p {
+    font-size: 18px;
+    opacity: 0.9;
+  }
+  
+  /* INTRO */
+  .about-intro {
+    padding: 50px 20px;
+    max-width: 900px;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .about-intro h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  .about-intro p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+  
+  .features {
+    list-style: none;
+    margin-top: 20px;
+  }
+  
+  .features li {
+    margin: 8px 0;
+    font-weight: 500;
+  }
+  
+  /* STATS */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    background: #f5f5f5;
+    padding: 40px 20px;
+    text-align: center;
+  }
+  
+  .stat-box {
+    padding: 20px;
+  }
+  
+  .stat-box h3 {
+    font-size: 28px;
+    color: #0e89be;
+  }
+  
+  .stat-box p {
+    margin-top: 5px;
+  }
+  
+  /* WHY US */
+  .why-us {
+    padding: 50px 20px;
+    text-align: center;
+  }
+  
+  .why-us h2 {
+    margin-bottom: 30px;
+    font-size: 28px;
+  }
+  
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  
+  .why-card {
+    padding: 20px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+  }
+  
+  .why-card:hover {
+    transform: translateY(-8px);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .about-hero h1 {
+      font-size: 28px;
+    }
+  
+    .about-intro h2,
+    .why-us h2 {
+      font-size: 22px;
+    }
+  }
