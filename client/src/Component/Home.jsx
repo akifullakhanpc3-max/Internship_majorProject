@@ -81,10 +81,10 @@ function Home() {
     <div>
 
       {/* 🔝 TOP BAR */}
-      <div className="top-bar">
+      {/* <div className="top-bar">
         Call for queries <br />
         <span>+91 99459 32938 | 0821-4502754</span>
-      </div>
+      </div> */}
 
       {/* 🌄 HERO */}
       <div

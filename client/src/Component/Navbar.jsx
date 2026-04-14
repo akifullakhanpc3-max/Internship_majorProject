@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+// import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import './Style/Navbar.css';
 import Dashboard from './Dashboard';
 
@@ -8,10 +8,10 @@ function Navbar() {
   const userId = localStorage.getItem("userId");
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleLogout = () => {
-    localStorage.removeItem("userId");
-    window.location.href = "/";
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("userId");
+  //   window.location.href = "/";
+  // };
 
   return (
     <div className='navbar'>
